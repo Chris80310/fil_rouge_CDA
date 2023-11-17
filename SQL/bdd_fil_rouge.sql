@@ -16,6 +16,7 @@ CREATE TABLE Distributeurs(
    PRIMARY KEY(Id_Distributeurs)
 );
 
+
 CREATE TABLE Bon_livraison(
    Id_bl INT AUTO_INCREMENT,
    date_livr DATE NOT NULL,
