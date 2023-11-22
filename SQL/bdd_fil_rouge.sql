@@ -18,7 +18,7 @@ CREATE TABLE distributeurs(
 );
 
 
-CREATE TABLE B)bon_livraison(
+CREATE TABLE bon_livraison(
    id_bl INT AUTO_INCREMENT,
    date_livr DATE NOT NULL,
    id_com INT NOT NULL,
@@ -32,9 +32,11 @@ CREATE TABLE produit(
    libelle_prod VARCHAR(50)  NOT NULL,
    prix_achat_fourn DECIMAL(10,2)   NOT NULL,
    prix_vente_ht DECIMAL(10,2)   NOT NULL,
+   id_ss_cat INT,
    id_dis INT,
    PRIMARY KEY(id_prod),
-   FOREIGN KEY(id_dis) REFERENCES distributeurs(id_dis)
+   FOREIGN KEY(id_dis) REFERENCES distributeurs(id_dis),
+   FOREIGN KEY(id_ss_cat) REFERENCES distributeurs(id_dis)
 );
 
 CREATE TABLE utilisateurs(
@@ -75,21 +77,21 @@ CREATE TABLE catégorie(
    libelle_cat VARCHAR(50) ,
    id_prod INT NOT NULL,
    PRIMARY KEY(id_cat),
-   FOREIGN KEY(id_prod) REFERENCES Produit(id_prod)
+   FOREIGN KEY(id_prod) REFERENCES produit(id_prod)
 );
 
-CREATE TABLE sous_cat(
+CREATE TABLE id_ss_cat(
    id_ss_cat INT AUTO_INCREMENT,
    id_cat INT NOT NULL,
    PRIMARY KEY(id_ss_cat),
-   FOREIGN KEY(id_cat) REFERENCES Catégorie(id_cat)
+   FOREIGN KEY(id_cat) REFERENCES catégorie(id_cat)
 );
 
 CREATE TABLE sous_cat2(
    id_ss_cat2 INT AUTO_INCREMENT,
    id_ss_cat NOT NULL,
    PRIMARY KEY(id_ss_cat2),
-   FOREIGN KEY(id_ss_cat) REFERENCES Catégorie(id_ss_cat)
+   FOREIGN KEY(id_ss_cat) REFERENCES catégorie(id_ss_cat)
 );
 
 CREATE TABLE details_bl(
@@ -97,23 +99,59 @@ CREATE TABLE details_bl(
    id_bl INT,
    qte DECIMAL(5,0)   NOT NULL,
    PRIMARY KEY(id_prod, id_bl),
-   FOREIGN KEY(id_prod) REFERENCES Produit(id_prod),
-   FOREIGN KEY (id_bl) REFERENCES Bon_livraison(id_bl)
+   FOREIGN KEY(id_prod) REFERENCES produit(id_prod),
+   FOREIGN KEY (id_bl) REFERENCES bon_livraison(id_bl)
 );
 
-CREATE TABLE Details_commande (
+CREATE TABLE details_commande (
    id_prod INT,
    id_com INT,
    qte DECIMAL(5,0)   NOT NULL,
    prix DECIMAL(6,2)   NOT NULL,
    PRIMARY KEY(id_prod, id_com),
-   FOREIGN KEY(id_prod) REFERENCES Produit(id_prod),
+   FOREIGN KEY(id_prod) REFERENCES produit(id_prod),
    FOREIGN KEY(id_com) REFERENCES commande(id_com)
 );
 
 -- catégorie : CPU / GPU / ...
 -- sous-cat : 1080p / 1440p / 4k
--- sous-cat2 : CPU gaming / CPU professionnel 
+-- sous-cat2 : gaming / professionnel
 
---INSERT INTO sous_cat (libelle_prod, prix_achat_fourn, prix_vente_ht, sous_cat)
---VALUES ('RYZEN 7600X', 200, 250, 4);
+--INSERT INTO distributeurs (nom_distri) VALUES ('AMD');
+--INSERT INTO distributeurs (nom_distri) VALUES ('NVIDIA');
+--INSERT INTO distributeurs (nom_distri) VALUES ('INTEL');
+
+--INSERT INTO catégorie (libel_cat) VALUES ('cartes graphiques');
+--INSERT INTO catégorie (libel_cat) VALUES ('processeurs');
+--INSERT INTO catégorie (libel_cat) VALUES ('cartes mères');
+--INSERT INTO catégorie (libel_cat) VALUES ('refroidissement processeur');
+--INSERT INTO catégorie (libel_cat) VALUES ('mémoire vive');
+--INSERT INTO catégorie (libel_cat) VALUES ('mémoire de stockage');
+--INSERT INTO catégorie (libel_cat) VALUES ('alimentations');
+--INSERT INTO catégorie (libel_cat) VALUES ('boitiers');
+--INSERT INTO catégorie (libel_cat) VALUES ('cablage');
+--INSERT INTO catégorie (libel_cat) VALUES ('ventilateurs boitier');
+
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RX6700XT', 235, 290, 1);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RX6800XT', 380, 450, 1);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RX7900XTX', 750, 900, 1);
+
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RTX3060Ti', 250, 330, 2);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RTX3080', 450, 580, 2);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RTX4090', 1400, 1600, 2);
+
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('ARC770', 250, 330, 3);
+
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RYZEN 7600X', 200, 250, 4);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RYZEN 7950X', 400, 550, 4);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('RYZEN 5800X3D ', 200, 250, 4);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('I5 13600k', 250, 330, 4);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('I5 14900k', 600, 750, 4);
+
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('B660', 300, 380, 5);
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('B650', 300, 380, 5);
+
+--INSERT INTO produit (libelle_prod, prix_achat_fourn, prix_vente_ht, id_ss_cat) VALUES ('Artic liquid freezer II', 80, 100, 6);
+
+
+
